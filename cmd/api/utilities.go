@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// writeJSON обертывает данные в json и возвращает пользователю
 func (app *application) writeJSON(w http.ResponseWriter, status int, data interface{}, wrap string) error {
 	wrapper := make(map[string]interface{})
 
@@ -22,7 +23,8 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data interf
 	return nil
 }
 
-func (app *application) errorJson(w http.ResponseWriter, err error) {
+// errorJSON обертывает ошибку в json и возвращает пользователю
+func (app *application) errorJSON(w http.ResponseWriter, err error) {
 	type jsonError struct {
 		Message string `json:"message"`
 	}

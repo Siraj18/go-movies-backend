@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// statusHandler возвращает состояние сервера
 func (app *application) statusHandler(w http.ResponseWriter, r *http.Request) {
 	currentStatus := appStatus{
 		Status:      "Available",

@@ -15,6 +15,7 @@ import (
 
 const version = "1.0.0"
 
+// config хранит в себе информацию о сервере
 type config struct {
 	port int
 	env  string
@@ -23,12 +24,14 @@ type config struct {
 	}
 }
 
+// appStatus хранит в себе информацию о сервер на данный момент
 type appStatus struct {
 	Status      string `json:"status"`
 	Environment string `json:"environment"`
 	Version     string `json:"version"`
 }
 
+// application хранит в себе конфигурацию и модели сервера для удобного обращения
 type application struct {
 	config config
 	logger *log.Logger
