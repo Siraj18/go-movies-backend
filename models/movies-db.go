@@ -234,7 +234,7 @@ func (m *DBModel) DeleteMovie(id int) error {
 
 	stmt := `DELETE FROM movies WHERE id=$1`
 
-	_, err := m.DB.ExecContext(ctx, stmt)
+	_, err := m.DB.ExecContext(ctx, stmt, id)
 	if err != nil {
 		return nil
 	}
