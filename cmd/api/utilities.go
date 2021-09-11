@@ -24,7 +24,13 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data interf
 }
 
 // errorJSON обертывает ошибку в json и возвращает пользователю
-func (app *application) errorJSON(w http.ResponseWriter, err error) {
+func (app *application) errorJSON(w http.ResponseWriter, err error, status ...int) {
+	statusCode := http.StatusBadRequest
+
+	if len(status) > 0 {
+		statusCode = status[0]
+	}
+
 	type jsonError struct {
 		Message string `json:"message"`
 	}
@@ -33,5 +39,5 @@ func (app *application) errorJSON(w http.ResponseWriter, err error) {
 		Message: err.Error(),
 	}
 
-	app.writeJSON(w, http.StatusBadRequest, theError, "error")
+	app.writeJSON(w, statusCode, theError, "error")
 }
