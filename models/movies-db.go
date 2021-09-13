@@ -33,6 +33,7 @@ WHERE id = $1`
 		&movie.MPAARating,
 		&movie.CreatedAt,
 		&movie.UpdatedAt,
+		&movie.Poster,
 	)
 	if err != nil {
 		return nil, err
@@ -81,7 +82,7 @@ func (m *DBModel) All(genre ...int) ([]*Movie, error) {
 		where = fmt.Sprintf("where id in (select movie_id from movies_genres where genre_id = %d)", genre[0])
 	}
 
-	query := fmt.Sprintf(`SELECT id, title, description, year, release_date, runtime, rating, mpaa_rating, created_at, updated_at FROM movies %s
+	query := fmt.Sprintf(`SELECT id, title, description, year, release_date, runtime, rating, mpaa_rating, created_at, updated_at, coalesce(poster, '') FROM movies %s
 ORDER BY title`, where)
 
 	rows, err := m.DB.QueryContext(ctx, query)
@@ -219,8 +220,8 @@ func (m *DBModel) UpdateMovie(movie Movie) error {
 		movie.Rating,
 		movie.MPAARating,
 		movie.UpdatedAt,
-		movie.ID,
 		movie.Poster,
+		movie.ID,
 	)
 
 	if err != nil {
